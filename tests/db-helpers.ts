@@ -1,6 +1,9 @@
 import Dexie from 'dexie';
 import 'dexie-observable';
 
+// Not the most appropriate place, but meh.
+localStorage.debug = 'react-idb-hooks';
+
 // This DB definition is from https://dexie.org/docs/Typescript
 
 export type Contact = {
