@@ -7,7 +7,7 @@ module.exports = config => config.set({
   ],
   preprocessors: { '**/*.ts': ['karma-typescript'] },
   reporters: ["progress", "karma-typescript"],
-  browsers: ["Chrome", "Firefox"],
+  browsers: ["Chrome", "Firefox", "SafariPrivate"],
   karmaTypescriptConfig: {
     compilerOptions: {
       esModuleInterop: true,
