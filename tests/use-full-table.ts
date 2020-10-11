@@ -13,6 +13,8 @@ describe('useFullTable', () => {
     await populateDB(db);
   });
 
+  afterEach(() => db.close());
+
   it('should read data from a table and update in case of modification', async () => {
     const { result } = renderHook(() => useFullTable(db.phones));
 
