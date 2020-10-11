@@ -1,5 +1,5 @@
 {
-  "name": "react-idb",
+  "name": "react-idb-hooks",
   "version": "1.0.0",
   "description": "Query IndexedDB easily from a react application",
   "main": "index.js",
