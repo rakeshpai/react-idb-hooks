@@ -26,7 +26,7 @@ describe('useRows', () => {
 
     await waitFor(() => expect(result.current).to.not.eql('loading'));
 
-    expect(result.current.length).to.eql(2);
+    expect(result.current!.length).to.eql(2);
 
     // Adding a new record
 
@@ -34,7 +34,7 @@ describe('useRows', () => {
       db.contacts.put({ first: 'Alice', last: 'Jones' })
     );
 
-    await waitFor(() => expect(result.current.length).to.eql(3));
+    await waitFor(() => expect(result.current!.length).to.eql(3));
 
     // Deleting a record
 
@@ -44,7 +44,7 @@ describe('useRows', () => {
       )
     );
 
-    await waitFor(() => expect(result.current.length).to.eql(2));
+    await waitFor(() => expect(result.current!.length).to.eql(2));
 
     // Modifying a record
     await act(() =>
@@ -57,7 +57,7 @@ describe('useRows', () => {
     await waitFor(() => {
       const results = result.current;
       if (results === 'loading') throw new Error('keeping ts happy');
-      if (!results.some(contact => contact.first === 'Brimful of Asha')) {
+      if (!results!.some(contact => contact.first === 'Brimful of Asha')) {
         throw new Error('Update didn\'t work');
       }
     });
@@ -73,7 +73,7 @@ describe('useRows', () => {
     await waitFor(() => {
       const results = result.current;
       if (results === 'loading') throw new Error('keeping ts happy');
-      if (results.some(contact => contact.first === 'Charlie')) {
+      if (results!.some(contact => contact.first === 'Charlie')) {
         throw new Error('Update reflected the wrong record.');
       }
     })

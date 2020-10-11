@@ -5,7 +5,7 @@ import useObservableListener from './use-observable-listener';
 
 export default <T, U, V extends T | T[]>(
   table: Dexie.Table<T, U>,
-  query: (table: Dexie.Table<T, U>) => Promise<V>,
+  query: (table: Dexie.Table<T, U>) => Promise<V | undefined>,
   observer: (state: V, changes: IDatabaseChange[]) => Promise<V> | V
 ) => {
   const throwError = useAsyncError();
@@ -17,7 +17,7 @@ export default <T, U, V extends T | T[]>(
   useEffect(() => {
     query(table)
       .then(data => {
-        if (!unmounted) setData(data);
+        if (!unmounted && data) setData(data);
       })
       .catch(throwError);
   }, [query, table, setData, throwError, unmounted]);
@@ -26,7 +26,7 @@ export default <T, U, V extends T | T[]>(
     if (data === 'loading') return;
 
     try {
-      const result = await observer(data as V, changes);
+      const result = await observer(data, changes);
       setData(result);
     } catch (e) {
       throwError(e);
@@ -35,5 +35,5 @@ export default <T, U, V extends T | T[]>(
 
   useObservableListener(table, internalObserver);
 
-  return data;
+  return data || undefined;
 };
