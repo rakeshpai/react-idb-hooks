@@ -10,17 +10,17 @@ export default <T, U, V extends T | T[]>(
 ) => {
   const throwError = useAsyncError();
   const [data, setData] = useState<V | 'loading'>('loading');
-  const [unmounted, setUnmounted] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
-  useEffect(() => setUnmounted(true));
+  useEffect(() => setMounted(false));
 
   useEffect(() => {
     query(table)
       .then(data => {
-        if (!unmounted && data) setData(data);
+        if (mounted && data) setData(data);
       })
       .catch(throwError);
-  }, [query, table, setData, throwError, unmounted]);
+  }, [query, table, setData, throwError, mounted]);
 
   const internalObserver = useCallback(async (changes: IDatabaseChange[]) => {
     if (data === 'loading') return;
@@ -31,9 +31,9 @@ export default <T, U, V extends T | T[]>(
     } catch (e) {
       throwError(e);
     }
-  }, [data, observer, setData, throwError, unmounted]);
+  }, [data, observer, setData, throwError, mounted]);
 
   useObservableListener(table, internalObserver);
 
-  return data || undefined;
+  return data;
 };

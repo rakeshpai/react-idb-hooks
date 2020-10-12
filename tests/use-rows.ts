@@ -29,7 +29,6 @@ describe('useRows', () => {
     expect(result.current!.length).to.eql(2);
 
     // Adding a new record
-
     await act(() => 
       db.contacts.put({ first: 'Alice', last: 'Jones' })
     );
@@ -37,7 +36,6 @@ describe('useRows', () => {
     await waitFor(() => expect(result.current!.length).to.eql(3));
 
     // Deleting a record
-
     await act(() =>
       db.contacts.delete(
         dbData.contacts.find(contact => contact.first === 'John')!.id
@@ -50,14 +48,14 @@ describe('useRows', () => {
     await act(() =>
       db.contacts.update(
         dbData.contacts.find(contact => contact.first === 'Alice')!.id,
-        { first: 'Brimful of Asha'}
+        { first: 'Dan'}
       )
     );
 
     await waitFor(() => {
       const results = result.current;
       if (results === 'loading') throw new Error('keeping ts happy');
-      if (!results!.some(contact => contact.first === 'Brimful of Asha')) {
+      if (!results!.some(contact => contact.first === 'Dan')) {
         throw new Error('Update didn\'t work');
       }
     });

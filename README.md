@@ -47,4 +47,4 @@ const FriendsList = () => {
 ```
 
 ## License
-IST, whatever that means. Just use this. I'm not out to get you. Pinky promise that you'll help make it better though - you have to agree to that.
+ISC.
